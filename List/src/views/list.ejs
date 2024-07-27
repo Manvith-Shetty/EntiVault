@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/content.css" />
+    <title>Anime List</title>
+
+    <style>
+      header {
+        margin: 3% 7%;
+        background-color: #f8f4e1;
+      }
+      nav {
+        margin: 0px;
+        padding: 20px 20px;
+      }
+      nav > a {
+        padding: 0% 4%;
+      }
+      a:active {
+        color: blue;
+      }
+
+      table {
+        margin: auto;
+        border-collapse: collapse;
+        width: 90%;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f0f0f0;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .delete-anime {
+        padding-left: 20px;
+      }
+
+      .edit-anime {
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/users/dashboard" style="text-decoration: none"
+        ><h1>EntiVault</h1></a
+      >
+      <p>Discover, Organize, Keep Track</p>
+    </header>
+    <ul>
+      <% if(messages.success_msg){ %>
+      <li style="color: red"><%= messages.success_msg %></li>
+      <% } %>
+    </ul>
+
+    <ul>
+      <% if(messages.error) { %>
+      <li style="color: red"><%= messages.error %></li>
+      <% } %>
+    </ul>
+    <nav>
+      |<a
+        href="/users/allanime"
+        style="text-decoration: none; background-color: #af8f6f"
+        >All Anime</a
+      >
+      |<a href="/users/watching" style="text-decoration: none"
+        >Currently Watching</a
+      >
+      |<a href="/users/completed" style="text-decoration: none">Completed</a>
+      |<a href="/users/onhold" style="text-decoration: none">On Hold</a> |<a
+        href="/users/dropped"
+        style="text-decoration: none"
+        >Dropped</a
+      >
+      |<a href="/users/plantowatch" style="text-decoration: none"
+        >Plan to Watch</a
+      >|
+    </nav>
+    <table>
+      <thead>
+        <tr>
+          <th>IMAGE</th>
+          <th>TITLE</th>
+          <th>STATUS</th>
+          <th>SCORE</th>
+          <th>PROGRESS</th>
+          <th>START DATE</th>
+          <th>FINISH DATE</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if(list.length !=0){ var i = 1; Array.from(list).forEach(list => { %>
+        <tr>
+          <td>
+            <img
+              src="<%= list.coverImage%>"
+              alt="poster"
+              style="height: 150px; width: 120px"
+            />
+          </td>
+          <td><%= list.title %></td>
+          <td><%= list.status %></td>
+          <td><%= list.score %></td>
+          <td><%= list.episode %></td>
+          <td><%= list.start_date %></td>
+          <td><%= list.finish_date %></td>
+          <td>
+            <div class="anime-item w3-padding w3-xlarge">
+              <a href="/animes/edit/<%= list.id %>" class="edit-anime"
+                ><i class="fas fa-edit"></i
+              ></a>
+
+              <a
+                href="#"
+                class="delete-anime"
+                onclick="document.getElementById('deleteForm-<%- list.id %>').submit(); return false;"
+              >
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+            <form
+              id="deleteForm-<%- list.id %>"
+              action="/animes/delete"
+              method="POST"
+              style="display: none"
+            >
+              <input type="hidden" name="animeId" value="<%- list.id %>" />
+            </form>
+          </td>
+        </tr>
+        <% })}; %>
+      </tbody>
+    </table>
+    <br />
+  </body>
+</html>

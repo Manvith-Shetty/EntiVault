@@ -1,0 +1,66 @@
+<%- include("partials/header.ejs") %>
+<br />
+<ul>
+  <% if(messages.success_msg){ %>
+  <li style="color: red"><%= messages.success_msg %></li>
+  <% } %>
+</ul>
+<ul>
+  <% if(messages.error) { %>
+  <li style="color: red"><%= messages.error %></li>
+  <% } %>
+</ul>
+<% if (anime) { %>
+<h1><%= anime.title %></h1>
+<hr />
+<div style="width: 95%">
+  <div>
+    <% if (anime.coverImage) { %>
+    <img
+      src="<%= anime.coverImage %>"
+      alt="<%= anime.title %> Cover"
+      style="margin: auto"
+    />
+    <% } %>
+    <div>
+      <ul>
+        <li><h5>Rank: <%= anime.rank %></h5></li>
+        <li><h5>Type: <%= anime.type %></h5></li>
+        <li><h5>Episodes: <%= anime.episodes %></h5></li>
+        <li><h5>Score: <%= anime.rating %></h5></li>
+        <li><h5>Duration: <%= anime.duration %></h5></li>
+        <li><h5>Popularity: <%= anime.popularity %></h5></li>
+        <% if (anime.genre && anime.genre.length > 0) { %>
+        <li>
+          <h5>
+            Genres: <% anime.genre.forEach(genre => { %> <%= genre %>, <% }) %>
+          </h5>
+        </li>
+        <% } %>
+      </ul>
+      <form action="/anime/add/<%= anime.id %>" method="post">
+        <label for="status">Status:</label>
+        <select name="status" id="status">
+          <option value="plan to watch">Plan to watch</option>
+          <option value="watching">Watching</option>
+          <option value="completed">Completed</option>
+          <option value="on hold">On-hold</option>
+          <option value="dropped">Dropped</option>
+        </select>
+
+        <button class="styled-button">Add to list</button>
+      </form>
+    </div>
+  </div>
+  <p style="color: black">Synopsis</p>
+  <hr />
+  <p><%= anime.description %></p>
+  <% if (anime.background) { %>
+  <p style="color: black">Background</p>
+  <hr />
+  <p><%= anime.background %></p>
+  <% } %>
+</div>
+<% } else { %>
+<p>No anime found with this ID.</p>
+<% } %>

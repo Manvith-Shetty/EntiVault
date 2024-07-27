@@ -1,0 +1,8 @@
+/AniData/node_modules
+/List/node_modules
+/Authentication/node_modules
+/Gateway/node_modules
+/AniData/.env
+/Authentication/.env
+/Gateway/.env
+/List/.env
