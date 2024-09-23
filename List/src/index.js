@@ -9,16 +9,14 @@ const app = express();
 
 app.use(express.static("src/public"));
 
-// Session configuration
 app.use(
   session({
-    secret: "your-secret-key", // Replace with your actual secret
+    secret: process.env.SESSION_SECRET, 
     resave: false,
     saveUninitialized: false,
   })
 );
 
-// Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
