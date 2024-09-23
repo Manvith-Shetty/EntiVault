@@ -1,7 +1,10 @@
-import { CreateChannel, PublishMessage } from "../utils/index.js";
+import amqp from "amqplib";
 
 export const anime = async (animeId) => {
-  const channel = await CreateChannel();
+  const connection = await amqp.connect("amqp://localhost:5672");
+  const channel = await connection.createChannel();
   const message = JSON.stringify({ animeId });
-  await PublishMessage(channel, "anime", message);
+  const result = await channel.assertQueue("ANIME_QUEUE");
+  channel.sendToQueue("ANIME_QUEUE", Buffer.from(message));
+  console.log("animeId sent successfully to queue...");
 };

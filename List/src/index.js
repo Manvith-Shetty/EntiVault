@@ -2,7 +2,6 @@ import express from "express";
 import session from "express-session";
 import passport from "passport";
 import pool from "./config/dbConfig.js";
-import { PORT } from "./config/index.js";
 import { userId } from "./controllers/userId.js";
 
 const app = express();
@@ -11,7 +10,7 @@ app.use(express.static("src/public"));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, 
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
